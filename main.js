@@ -1,15 +1,18 @@
-import { generateReturnsArray } from '/src/investmentGoals.js';
+// Importa funções de cálculo, gráficos e tabela
+import { generateReturnsArray } from './src/investmentGoals';
 import { Chart } from 'chart.js/auto';
-import { createTable } from '/src/table';
+import { createTable } from './src/table';
 
-const finalMoneyChart = document.getElementById('final-money-distribution');
-const progressionChart = document.getElementById('progression');
-const form = document.getElementById('investment-form');
-const clearFormButton = document.getElementById('clear-form');
+// Referências aos elementos do DOM
+const finalMoneyChart = document.getElementById('final-money-distribution'); // Gráfico doughnut
+const progressionChart = document.getElementById('progression'); // Gráfico de barras
+const form = document.getElementById('investment-form'); // Formulário principal
+const clearFormButton = document.getElementById('clear-form'); // Botão de limpar formulário
 // const calculateButton = document.getElementById('calculate-results');
-let doughnutChartReference = {};
-let progressionChartReference = {};
+let doughnutChartReference = {}; // Referência ao gráfico doughnut
+let progressionChartReference = {}; // Referência ao gráfico de barras
 
+// Definição das colunas da tabela de resultados
 const columnsArray = [
   { columnLabel: 'Mês', accessor: 'month' },
   {
@@ -34,20 +37,24 @@ const columnsArray = [
   },
 ];
 
+// Formata valores para moeda brasileira para exibição na tabela
 function formatCurrencyToTable(value) {
   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+// Formata valores para exibição nos gráficos (duas casas decimais)
 function formatCurrencyToGraph(value) {
   return value.toFixed(2);
 }
 
+// Função principal para processar o formulário e renderizar gráficos e tabela
 function renderProgression(evt) {
-  evt.preventDefault();
+  evt.preventDefault(); // Evita recarregar a página
   if (document.querySelector('.error')) {
-    return;
+    return; // Não processa se houver erro de validação
   }
-  resetCharts();
+  resetCharts(); // Limpa gráficos anteriores
+  // Coleta e converte os valores do formulário
   // const startingAmount = Number(form['startingAmount'].value);
   const startingAmount = Number(
     document.getElementById('starting-amount').value.replace(',', '.')
@@ -65,6 +72,7 @@ function renderProgression(evt) {
     document.getElementById('tax-rate').value.replace(',', '.')
   );
 
+  // Gera o array de resultados do investimento
   const returnsArray = generateReturnsArray(
     startingAmount,
     timeAmount,
@@ -74,8 +82,10 @@ function renderProgression(evt) {
     returnRatePeriod
   );
 
+  // Pega o último objeto (resultado final)
   const finalInvestmentObject = returnsArray[returnsArray.length - 1];
 
+  // Cria o gráfico doughnut de distribuição final
   doughnutChartReference = new Chart(finalMoneyChart, {
     type: 'doughnut',
     data: {
@@ -102,6 +112,7 @@ function renderProgression(evt) {
     },
   });
 
+  // Cria o gráfico de barras de evolução mensal
   progressionChartReference = new Chart(progressionChart, {
     type: 'bar',
     data: {
@@ -136,13 +147,16 @@ function renderProgression(evt) {
     },
   });
 
+  // Cria a tabela de resultados
   createTable(columnsArray, returnsArray, 'results-table');
 }
 
+// Função utilitária para verificar se um objeto está vazio
 function isObjectEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 
+// Destroi os gráficos existentes antes de criar novos
 function resetCharts() {
   if (
     !isObjectEmpty(doughnutChartReference) &&
@@ -153,6 +167,7 @@ function resetCharts() {
   }
 }
 
+// Limpa o formulário e os gráficos
 function clearForm() {
   form['starting-amount'].value = '';
   form['additional-contribution'].value = '';
@@ -170,6 +185,7 @@ function clearForm() {
   }
 }
 
+// Validação dos campos do formulário
 function validateInput(evt) {
   if (evt.target.value === '') {
     return;
@@ -200,17 +216,20 @@ function validateInput(evt) {
   }
 }
 
+// Adiciona evento de validação para cada input do formulário
 for (const formElement of form) {
   if (formElement.tagName === 'INPUT' && formElement.hasAttribute('name')) {
     formElement.addEventListener('blur', validateInput);
   }
 }
 
+// Referências para o carrossel de slides
 const mainEl = document.querySelector('main');
 const carouselEl = document.getElementById('carousel');
 const nextButton = document.getElementById('slide-arrow-next');
 const previousButton = document.getElementById('slide-arrow-previous');
 
+// Eventos para navegação do carrossel
 nextButton.addEventListener('click', () => {
   carouselEl.scrollLeft += mainEl.clientWidth;
 });
@@ -218,6 +237,7 @@ previousButton.addEventListener('click', () => {
   carouselEl.scrollLeft -= mainEl.clientWidth;
 });
 
+// Eventos principais do formulário
 form.addEventListener('submit', renderProgression);
 // calculateButton.addEventListener('click', renderProgression);
 clearFormButton.addEventListener('click', clearForm);

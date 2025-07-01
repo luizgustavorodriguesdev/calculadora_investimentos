@@ -1,14 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />    
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="src/style.css" rel="stylesheet">
-    <title>Calculadora de Investimento - Treinamento - JavaScript - Vite - Tailwinddcss</title>
+    <link rel="stylesheet" href="./style.css" />
+    <title>Calculadora de Investimentos</title>
   </head>
   <body class="h-[100dvh] grid grid-cols-3 grid-rows-2">
     <aside
-      class="row-span-2 bg-neutral-900 flex flex-col justify-between py-5 px-2">
+      class="row-span-2 bg-slate-900 flex flex-col justify-between py-5 px-2">
       <h1 class="text-2xl font-bold px-6">Calculadora de Investimentos</h1>
       <form id="investment-form" class="w-full">
         <div class="flex w-full flex-col px-6 my-2 h-[4.25rem]">
@@ -23,7 +23,7 @@
               disabled />
             <input
               type="text"
-              class="w-5/6 h-10 rounded-r-lg px-2"
+              class="w-5/6 rounded-r-lg px-2"
               placeholder="0.00"
               required
               id="starting-amount"
@@ -42,7 +42,7 @@
               disabled />
             <input
               type="text"
-              class="w-5/6 h-10 rounded-r-lg px-2"
+              class="w-5/6 rounded-r-lg px-2"
               placeholder="0.00"
               name="additional-contribution"
               id="additional-contribution" />
@@ -53,7 +53,7 @@
           <div class="flex">
             <input
               type="text"
-              class="w-2/3 h-10 rounded-l-lg px-2"
+              class="w-2/3 rounded-l-lg px-2"
               id="time-amount"
               name="time-amount"
               required
@@ -61,7 +61,7 @@
             <select
               id="time-amount-period"
               name="time-amount-period"
-              class="w-1/3 h-10 rounded-r-lg border-l-2 border-emerald-600 text-center hover:bg-emerald-950 hover:text-slate-200">
+              class="w-1/3 rounded-r-lg border-l-2 border-emerald-600 text-center hover:bg-emerald-950 hover:text-slate-200">
               <option value="monthly">Mensal</option>
               <option value="yearly">Anual</option>
             </select>
@@ -79,7 +79,7 @@
               disabled />
             <input
               type="text"
-              class="w-1/2 h-10 px-2"
+              class="w-1/2 px-2"
               id="return-rate"
               name="return-rate"
               required
@@ -105,7 +105,7 @@
               disabled />
             <input
               type="text"
-              class="w-5/6 h-10 rounded-r-lg px-2"
+              class="w-5/6 rounded-r-lg px-2"
               id="tax-rate"
               name="tax-rate"
               required
@@ -160,6 +160,6 @@
         </section>
       </div>
     </main>
-    <script type="module" src="src/main.js"></script>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>

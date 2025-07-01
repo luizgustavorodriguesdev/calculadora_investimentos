@@ -1,10 +1,10 @@
-// Função para converter uma taxa de retorno anual em taxa de retorno mensal
+// Converte uma taxa de retorno anual para mensal
 function convertToMontlyReturnRate(yearlyReturnRate) {
-  // Utiliza a fórmula de radiciação para converter taxa anual em mensal
+  // Fórmula para converter taxa anual em mensal
   return yearlyReturnRate ** (1 / 12);
 }
 
-// Função principal para gerar o array de retornos de investimento ao longo do tempo
+// Gera um array com a evolução do investimento ao longo do tempo
 export function generateReturnsArray(
   startingAmount = 0, // Valor inicial investido
   timeHorizon = 0, // Prazo do investimento (em meses ou anos)
@@ -13,14 +13,14 @@ export function generateReturnsArray(
   returnRate = 0, // Taxa de retorno (mensal ou anual)
   returnTimeFrame = "monthly" // Periodicidade da taxa de retorno ("monthly" ou "yearly")
 ) {
-  // Validação: exige valores positivos para investimento inicial e prazo
+  // Validação dos parâmetros obrigatórios
   if (!timeHorizon || !startingAmount) {
     throw new Error(
       "Investimento inicial e prazo devem ser preenchidos com valores positivos."
     );
   }
 
-  // Calcula a taxa de retorno final de acordo com a periodicidade informada
+  // Calcula a taxa de retorno final de acordo com a periodicidade
   const finalReturnRate =
     returnTimeFrame === "monthly"
       ? 1 + returnRate / 100 // Se mensal, soma 1 à taxa percentual
@@ -30,7 +30,7 @@ export function generateReturnsArray(
   const finalTimeHorizon =
     timePeriod === "monthly" ? timeHorizon : timeHorizon * 12;
 
-  // Objeto de referência para o primeiro mês (mês 0)
+  // Objeto de referência para o mês 0 (início do investimento)
   const referenceInvestmentObject = {
     investedAmount: startingAmount, // Valor investido até o momento
     interestReturns: 0, // Juros do mês
@@ -41,7 +41,7 @@ export function generateReturnsArray(
 
   // Inicializa o array de retornos com o objeto de referência
   const returnsArray = [referenceInvestmentObject];
-  // Loop para calcular os retornos mês a mês
+  // Loop para calcular a evolução mês a mês
   for (
     let timeReference = 1;
     timeReference <= finalTimeHorizon;
@@ -67,7 +67,6 @@ export function generateReturnsArray(
       totalAmount,
     });
   }
-
   // Retorna o array com os dados de todos os meses
   return returnsArray;
 }
